@@ -1,3 +1,4 @@
+/* (c) SZABO Gergely <szg@subogero.com>, license WTFPL 2.0 */
 #include <unistd.h>
 #include <fcntl.h>
 #include <sys/stat.h>
@@ -87,6 +88,7 @@ int main(int argc, char *argv[]) {
 	return 0;
 }
 
+/* Start or stop the actual openvpn daemon */
 static int service(char *cmd)
 {
 	pid_t pid = fork();
@@ -106,6 +108,7 @@ static int service(char *cmd)
 	}
 }
 
+/* Write number in decimal format to file descriptor, printf() is BLOATED!!! */
 static void writedec(int fd, int num)
 {
 	/* Special cases: zero and negative numbers (print neg.sign) */
