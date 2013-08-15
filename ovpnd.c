@@ -11,11 +11,27 @@ static int service(char *cmd);
 static void writedec(int fd, int num);
 
 int main(int argc, char *argv[]) {
+	/* Client when called with u d r q options */
+	if (argc > 1) {
+		int cmdfd = open("/var/run/ovpnd.cmd", O_WRONLY|O_NONBLOCK);
+		if (cmdfd < 0) {
+			write(2, "Can't open /var/run/ovpnd.cmd\n", 31);
+			return 10;
+		}
+		if (write(cmdfd, argv[1], 1) == 0) {
+			write(2, "Can't write /var/run/ovpnd.cmd\n", 32);
+			return 11;
+		}
+		return 0;
+	}
 	/* Fork the real daemon */
 	pid_t pid = fork();
 	if (pid < 0)
 		return 1;
 	if (pid > 0) {
+		write(1, "ovpnd daemon started, PID ", 26);
+		writedec(1, pid);
+		write(1, "\n", 1);
 		return 0;
 	}
 	/* umask and session ID */

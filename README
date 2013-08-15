@@ -3,17 +3,18 @@ ovpnd - daemon to start/stop openvpn client without root privileges
 
 It's really hard to use the openvpn client, as it either starts at boot,
 or you have to start/stop it as root using the initsripts.
-But the reality is, you have to do something on your home or office network
-quickly, you log on to the VPN, do your thing, and log off.
+But in reality, you have to do something on your home or office network
+quickly, you want to log on to the VPN, do your thing, and log off.
 
 The solution is ovpnd, which listens in the background
 through FIFO file /var/run/ovpnd.cmd.
 You can start, stop or restart openvpn by simply writing a one-character
 command into the FIFO.
 
-Operation           Command                      Mnemonic
----------------------------------------------------------
-Start openvpn       echo u > /var/run/ovpnd.cmd  Up
-Stop openvpn        echo d > /var/run/ovpnd.cmd  Down
-Restart openvpn     echo r > /var/run/ovpnd.cmd  Restart
-Quit openvpn/ovpnd  echo q > /var/run/ovpnd.cmd  Quit
+Operation           Command  Mnemonic
+-------------------------------------
+Start ovpnd         ovpnd
+Start openvpn       ovpnd u  Up
+Stop openvpn        ovpnd d  Down
+Restart openvpn     ovpnd r  Restart
+Quit openvpn/ovpnd  ovpnd q  Quit
